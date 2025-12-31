@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Governance Model & EU AI Act</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .role-card {
+            background-color: #f0f9ff;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            border: 1px solid #bfdbfe;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .role-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1d4ed8;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .role-card ul {
+            list-style: none;
+            padding-left: 0;
+            flex-grow: 1;
+        }
+        .role-card ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        .role-card ul li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #10b981;
+            position: absolute;
+            left: 0;
+            top: 0.125rem;
+        }
+        .ai-governance-circle {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border-radius: 9999px;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            box-shadow: 0 10px 15px rgba(59, 130, 246, 0.3);
+            margin: 1rem auto;
+            flex-shrink: 0;
+        }
+        .ai-governance-circle span {
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-top: 0.25rem;
+            opacity: 0.9;
+        }
+
+        /* Risk Levels Styling */
+        .risk-tier {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 6px solid;
+            margin-bottom: 1rem;
+        }
+        .risk-unacceptable { background-color: #fef2f2; border-left-color: #ef4444; }
+        .risk-high { background-color: #fff7ed; border-left-color: #f97316; }
+        .risk-limited { background-color: #eff6ff; border-left-color: #3b82f6; }
+        .risk-minimal { background-color: #f0fdf4; border-left-color: #22c55e; }
+
+        .why-grid-item {
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        .why-grid-item:hover {
+            border-color: #3b82f6;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-black text-slate-900 mb-4 tracking-tight">AI Governance Framework</h1>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                Strategic compliance and functional accountability for a 200-person European IT Consultancy.
+            </p>
+        </header>
+
+        <!-- SECTION 1: THE CORE COMMITTEE -->
+        <div class="card">
+            <h2 class="section-title"><i class="fas fa-shield-alt"></i> The Core: AI Governance Committee</h2>
+            <div class="flex flex-col lg:flex-row items-center gap-10">
+                <div class="ai-governance-circle">
+                    AI Governance Committee
+                    <span>Senior Leadership & Cross-Functional Experts</span>
+                </div>
+                <div class="flex-1">
+                    <p class="text-lg font-medium text-slate-800 mb-4">
+                        The central authority for AI strategy, ethical policy, and legal oversight.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex gap-3">
+                            <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                            <span>Define ethical principles & usage guidelines</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                            <span>Approve high-risk AI deployments</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                            <span>Monitor compliance with EU AI Act & GDPR</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                            <span>Manage enterprise-wide AI risk registry</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: ROLES & RESPONSIBILITIES -->
+        <div class="card">
+            <h2 class="section-title"><i class="fas fa-sitemap"></i> Functional Roles & Responsibilities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- HR Card -->
+                <div class="role-card">
+                    <h3><i class="fas fa-users"></i> Human Resources</h3>
+                    <ul>
+                        <li>Ensure unbiased AI in recruitment/performance.</li>
+                        <li>Lead employee AI literacy & policy training.</li>
+                        <li>Manage AI-driven organizational change.</li>
+                        <li>Guarantee human oversight for HR decisions.</li>
+                    </ul>
+                </div>
+                <!-- Sales Card -->
+                <div class="role-card">
+                    <h3><i class="fas fa-handshake"></i> Sales & Account Mgt</h3>
+                    <ul>
+                        <li>Disclose AI usage in client solutions.</li>
+                        <li>Educate clients on AI limits and data usage.</li>
+                        <li>Ensure non-discriminatory lead scoring.</li>
+                        <li>Gather client feedback on AI value/trust.</li>
+                    </ul>
+                </div>
+                <!-- Ops Card -->
+                <div class="role-card">
+                    <h3><i class="fas fa-cogs"></i> Operations & Quality</h3>
+                    <ul>
+                        <li>Monitor production model performance.</li>
+                        <li>Manage data integrity and lineage.</li>
+                        <li>Audit compliance against ISO/AI standards.</li>
+                        <li>Maintain continuous improvement loops.</li>
+                    </ul>
+                </div>
+                <!-- Delivery Card -->
+                <div class="role-card">
+                    <h3><i class="fas fa-code-branch"></i> Delivery Teams</h3>
+                    <ul>
+                        <li>Design for fairness and explainability.</li>
+                        <li>Maintain technical documentation (AI Act).</li>
+                        <li>Conduct robust bias & error validation.</li>
+                        <li>Implement early-drift detection systems.</li>
+                    </ul>
+                </div>
+                <!-- IT Card -->
+                <div class="role-card">
+                    <h3><i class="fas fa-server"></i> IT & Infrastructure</h3>
+                    <ul>
+                        <li>Provision secure compute/data platforms.</li>
+                        <li>Implement enterprise AI security protocols.</li>
+                        <li>Deploy governance & monitoring toolsets.</li>
+                        <li>Ensure technical architecture scalability.</li>
+                    </ul>
+                </div>
+                <!-- Legal/Finance (New Placeholder) -->
+                <div class="role-card bg-slate-50 border-slate-200">
+                    <h3 class="text-slate-700"><i class="fas fa-balance-scale"></i> Legal & Compliance</h3>
+                    <ul class="text-slate-600">
+                        <li>Interpret evolving EU AI Act requirements.</li>
+                        <li>Manage liability and contract clauses.</li>
+                        <li>Oversee insurance & financial risk levels.</li>
+                        <li>Handle regulatory reporting needs.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: EU AI ACT SUMMARY -->
+        <div class="card">
+            <h2 class="section-title"><i class="fas fa-gavel"></i> EU AI Act: Risk-Based Framework</h2>
+            <p class="mb-6 text-slate-600">The world’s first comprehensive AI law. AI systems are categorized by the risk they pose to society.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div class="risk-tier risk-unacceptable">
+                    <h4 class="font-bold text-red-700 flex justify-between">UNACCEPTABLE RISK <span>Banned</span></h4>
+                    <p class="text-sm">Cognitive manipulation, social scoring, or real-time remote biometric ID in public spaces.</p>
+                </div>
+                <div class="risk-tier risk-high">
+                    <h4 class="font-bold text-orange-700 flex justify-between">HIGH RISK <span>Strictly Regulated</span></h4>
+                    <p class="text-sm">AI in recruitment, medical devices, critical infrastructure, or law enforcement. Requires risk audits and human oversight.</p>
+                </div>
+                <div class="risk-tier risk-limited">
+                    <h4 class="font-bold text-blue-700 flex justify-between">LIMITED RISK <span>Transparency Rules</span></h4>
+                    <p class="text-sm">Chatbots and deepfakes. Users must be informed they are interacting with an AI.</p>
+                </div>
+                <div class="risk-tier risk-minimal">
+                    <h4 class="font-bold text-green-700 flex justify-between">MINIMAL RISK <span>No New Obligations</span></h4>
+                    <p class="text-sm">Spam filters, AI-enabled video games, or inventory management systems.</p>
+                </div>
+            </div>
+
+            <div class="bg-red-50 border border-red-200 p-4 rounded-lg flex items-center gap-4">
+                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                <div>
+                    <span class="font-bold text-red-800">The Penalty for Non-Compliance:</span>
+                    <span class="text-red-700">Fines up to <strong>€35 Million</strong> or <strong>7% of global annual turnover</strong>.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: WHY GOVERNANCE MATTERS -->
+        <div class="card">
+            <h2 class="section-title"><i class="fas fa-question-circle"></i> Why We Need an AI Governance Group</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="why-grid-item">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4 class="font-bold mb-2">Assess & Classify Risk</h4>
+                    <p class="text-sm text-slate-600">Categorizing tools into Risk Tiers requires cross-functional input from IT, Legal, and Business units.</p>
+                </div>
+
+                <div class="why-grid-item">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h4 class="font-bold mb-2">Ensure Compliance</h4>
+                    <p class="text-sm text-slate-600">Overseeing the extensive documentation, testing, and monitoring mandated for "High-Risk" systems.</p>
+                </div>
+
+                <div class="why-grid-item">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h4 class="font-bold mb-2">Clear Accountability</h4>
+                    <p class="text-sm text-slate-600">Defining who "owns" each system, who is responsible for output, and disaster recovery procedures.</p>
+                </div>
+
+                <div class="why-grid-item">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h4 class="font-bold mb-2">Central Oversight</h4>
+                    <p class="text-sm text-slate-600">Preventing departmental "Shadow AI" by ensuring consistent safety and compliance standards across the firm.</p>
+                </div>
+
+                <div class="why-grid-item">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4 class="font-bold mb-2">Protect the Business</h4>
+                    <p class="text-sm text-slate-600">Enabling safe innovation while shielding the company from severe legal, financial, and reputational damage.</p>
+                </div>
+
+                <div class="why-grid-item flex items-center justify-center bg-blue-600 text-white border-none">
+                    <div class="text-center">
+                        <i class="fas fa-lock text-3xl mb-2"></i>
+                        <p class="font-bold">Compliant by Design</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="text-center mt-12 text-slate-500 text-sm">
+            <p>&copy; 2025 Zifo - Digital Transformation Consulting. All rights reserved.</p>
+            <p class="mt-1 italic">Building trust through responsible Artificial Intelligence.</p>
+        </footer>
+    </div>
+</body>
+</html>
