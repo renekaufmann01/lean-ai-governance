@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive AI Governance Model</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Subtle Accents -->
+    <!-- Application Structure Plan: The SPA is structured into four logical, scrollable sections: 1) The Challenge (Current State), 2) Core Principles, 3) The Governance Model (Structure & Roles), and 4) The Roadmap. This thematic flow guides the user from the problem to the solution in a narrative way. A sticky navigation bar allows for quick jumps between these key areas. The core interaction is an interactive RACI matrix in the 'Governance Model' section, allowing users to filter responsibilities by department. This structure was chosen to simplify a dense report, making it highly scannable and allowing users to drill into the most relevant parts (like their own department's roles) without being overwhelmed. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Current state of uncoordinated AI. Goal: Inform/Highlight Problem. Viz/Method: Key stat cards (HTML/CSS) with large numbers (e.g., "14% possess an overview"). Interaction: Hover effects to draw attention. Justification: More impactful than a paragraph of text.
+        - Report Info: 9 core AI governance principles. Goal: Organize/Inform. Viz/Method: Interactive card grid (HTML/CSS/JS). Interaction: Clicking a card reveals its detailed definition. Justification: Breaks down a dense list into digestible, user-driven chunks.
+        - Report Info: RACI Matrix. Goal: Organize/Compare. Viz/Method: Interactive HTML table. Interaction: Department filter buttons dynamically hide/show table columns. Justification: Solves the primary user need of understanding specific roles and responsibilities, making a complex table user-friendly.
+        - Report Info: Phased implementation roadmap. Goal: Change/Inform. Viz/Method: A horizontal timeline built with HTML/CSS and flexbox. Interaction: Hover effects on phases to reveal key actions. Justification: Visually represents the process over time, which is more intuitive than a list or table.
+        - Library/Method: Chart.js is used for a donut chart illustrating the governance gap, providing a quick visual summary. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #D35400;
+            border-bottom-color: #D35400;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .principle-card.active {
+            border-color: #D35400;
+            background-color: #FEF5E7;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -0.5rem;
+            transform: translateY(-50%);
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: #D35400;
+            border: 3px solid #FDFBF8;
+        }
+        .raci-filter.active {
+            background-color: #D35400;
+            color: white;
+        }
+        .chart-container {
+            position: relative; 
+            width: 100%; 
+            max-width: 400px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">AI Governance Framework</h1>
+            <div class="hidden md:flex space-x-8">
+                <a class="nav-link border-b-2 border-transparent pb-1" data-target="challenge">The Challenge</a>
+                <a class="nav-link border-b-2 border-transparent pb-1" data-target="principles">Principles</a>
+                <a class="nav-link border-b-2 border-transparent pb-1" data-target="model">The Model</a>
+                <a class="nav-link border-b-2 border-transparent pb-1" data-target="roadmap">Roadmap</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="challenge" class="mb-24 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Orchestrating Trustworthy AI</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-12">Currently, AI activities across the company are uncoordinated, leading to inefficiencies, risks, and a lack of oversight. This application visualizes a lean, pragmatic governance model to address this challenge and turn responsible AI into a competitive advantage.</p>
+            
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="card bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-5xl font-bold text-orange-600 mb-2">90%</h3>
+                    <p class="text-gray-600">of companies see the need for a holistic AI overview for governance.</p>
+                </div>
+                <div class="card bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-5xl font-bold text-red-600 mb-2">14%</h3>
+                    <p class="text-gray-600">actually possess such visibility, highlighting a critical governance gap.</p>
+                </div>
+                <div class="card bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-5xl font-bold text-green-600 mb-2">40%</h3>
+                    <p class="text-gray-600">faster AI deployment can be achieved with effective cross-functional governance.</p>
+                </div>
+            </div>
+
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">The Governance Gap</h3>
+                <p class="text-center max-w-2xl mx-auto mb-8">The disparity between recognizing the need for AI governance and successfully implementing it is significant. This visualization helps bridge that gap by clarifying the path forward.</p>
+                <div class="chart-container">
+                    <canvas id="governanceGapChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="principles" class="mb-24 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Foundational Principles</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-12">This governance model is built on nine core principles for trustworthy AI, aligned with global standards. Click on a principle to learn more about its importance in the life sciences IT services context.</p>
+            
+            <div id="principles-grid" class="grid md:grid-cols-3 gap-6">
+            </div>
+
+            <div id="principle-details" class="mt-8 p-6 bg-orange-50 rounded-lg border border-orange-200 min-h-[100px] flex items-center justify-center">
+                <p class="text-gray-600">Select a principle above to see its definition.</p>
+            </div>
+        </section>
+
+        <section id="model" class="mb-24 scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">The Governance Model</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-12">The model establishes a central AI Governance Committee (AIGC) and clarifies cross-functional responsibilities using a RACI matrix. This structure provides central oversight while enabling distributed execution.</p>
+
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Interactive RACI Matrix</h3>
+                <p class="text-center max-w-2xl mx-auto mb-8">Use the filters below to highlight the roles and responsibilities for a specific function. This helps clarify who is Responsible, Accountable, Consulted, and Informed for each key governance activity.</p>
+                
+                <div id="raci-filters" class="flex flex-wrap justify-center gap-2 mb-8">
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table id="raci-table" class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <section id="roadmap" class="scroll-mt-20">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Implementation Roadmap</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-16">A phased, agile approach ensures a pragmatic and successful rollout of the AI governance framework. Hover over each phase to see the key actions and expected outcomes.</p>
+
+            <div class="relative">
+                <div class="border-l-4 border-orange-200 ml-4 md:ml-0 md:border-l-0 md:border-t-4 md:mx-auto md:w-full">
+                    <div id="roadmap-container" class="md:flex md:justify-between">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-24">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 AI Governance Initiative. A visualization for strategic alignment and responsible innovation.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const principlesData = [
+                { name: "Accountability", definition: "Establishing clear responsibilities for AI system outcomes. Critical for patient safety and defining who is responsible if an AI solution makes a flawed decision." },
+                { name: "Transparency", definition: "Providing clear information about how AI systems operate. Essential for building client trust and enabling stakeholders to understand AI's role." },
+                { name: "Explainability", definition: "Ensuring AI decision-making can be understood by humans. Vital for validating clinical decisions and gaining acceptance from medical professionals." },
+                { name: "Data Privacy & Security", definition: "Protecting sensitive data and ensuring data minimization. Paramount for safeguarding patient data and complying with GDPR." },
+                { name: "Compliance", definition: "Adhering to all relevant laws and standards like the EU AI Act. Non-negotiable for market access and delivering compliant solutions." },
+                { name: "Inclusivity & Fairness", definition: "Designing AI systems to treat all groups equitably and mitigate biases. Crucial for preventing discrimination in HR and clinical applications." },
+                { name: "Robustness & Safety", definition: "Developing reliable, secure, and resilient AI systems. Directly impacts patient safety and the reliability of drug discovery models." },
+                { name: "Auditability", definition: "Enabling systematic checks and assessments of AI systems. Essential for regulatory inspections and demonstrating adherence to ethical principles." },
+                { name: "Continuous Monitoring", definition: "Regularly evaluating and updating AI systems to ensure ongoing effectiveness. Prevents model drift and adapts to new scientific and regulatory changes." }
+            ];
+
+            const raciData = {
+                headers: ["Activity", "AIGC/Lead", "Sales", "HR", "Biz Ops (Quality)", "Service Delivery", "Strategy Consulting", "IT (India)"],
+                rows: [
+                    ["Define AI Policy", "A", "I", "C", "C", "C", "C", "I"],
+                    ["Conduct Risk Assessments", "A", "C", "R", "R", "R", "C", "C"],
+                    ["Ensure Data Privacy", "A", "C", "R", "R", "R", "I", "R"],
+                    ["Develop & Train Models", "I", "I", "C", "C", "R", "C", "R"],
+                    ["Validate Model Performance", "A", "I", "C", "R", "R", "C", "C"],
+                    ["Monitor Systems", "A", "I", "R", "R", "R", "I", "R"],
+                    ["Ensure Compliance", "A", "R", "R", "R", "R", "C", "R"],
+                    ["Manage Incidents", "A", "R", "R", "R", "R", "I", "R"],
+                    ["Provide AI Training", "A", "R", "R", "R", "R", "R", "R"],
+                    ["Prioritize Use Cases", "A", "R", "C", "C", "C", "R", "C"],
+                    ["Manage Vendor Risk", "A", "C", "C", "R", "C", "C", "R"]
+                ]
+            };
+            
+            const roadmapData = [
+                { phase: "Phase 1: Foundation", timeline: "Q1-Q2", details: "Formalize AIGC, inventory all AI use cases, draft foundational policy, and initiate awareness programs.", outcome: "Clear mandate & baseline understanding." },
+                { phase: "Phase 2: Design", timeline: "Q3-Q4", details: "Refine policy and procedures, implement RACI matrix, pilot governance tech, and map regulatory requirements.", outcome: "Operational processes & clear roles." },
+                { phase: "Phase 3: Integration", timeline: "Q5-Q6", details: "Full rollout of policies, integrate continuous monitoring tools, expand training, and prepare for ISO certification.", outcome: "Embedded governance & proactive risk detection." },
+                { phase: "Phase 4: Optimization", timeline: "Ongoing", details: "Establish continuous improvement cycle, fully leverage automation, and align governance globally.", outcome: "Adaptive, efficient, and scalable governance." }
+            ];
+
+            const principlesGrid = document.getElementById('principles-grid');
+            const principleDetails = document.getElementById('principle-details');
+            principlesData.forEach((p, index) => {
+                const card = document.createElement('div');
+                card.className = 'principle-card card bg-white p-6 rounded-lg shadow-sm cursor-pointer border-2 border-transparent';
+                card.textContent = p.name;
+                card.dataset.index = index;
+                principlesGrid.appendChild(card);
+            });
+
+            principlesGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('principle-card')) {
+                    document.querySelectorAll('.principle-card').forEach(c => c.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const principle = principlesData[e.target.dataset.index];
+                    principleDetails.innerHTML = `<p class="text-gray-700"><strong class="text-orange-600">${principle.name}:</strong> ${principle.definition}</p>`;
+                }
+            });
+
+            const raciFiltersContainer = document.getElementById('raci-filters');
+            const raciTable = document.getElementById('raci-table');
+            const raciThead = raciTable.querySelector('thead');
+            const raciTbody = raciTable.querySelector('tbody');
+
+            const renderRaciTable = (filterIndex = -1) => {
+                raciThead.innerHTML = '';
+                raciTbody.innerHTML = '';
+                
+                const headerRow = document.createElement('tr');
+                raciData.headers.forEach((header, index) => {
+                    const th = document.createElement('th');
+                    th.scope = 'col';
+                    th.className = 'px-6 py-3';
+                    th.textContent = header;
+                    th.dataset.colIndex = index;
+                    if (filterIndex !== -1 && index > 1 && index !== filterIndex) {
+                        th.classList.add('hidden');
+                    }
+                    headerRow.appendChild(th);
+                });
+                raciThead.appendChild(headerRow);
+
+                raciData.rows.forEach(rowData => {
+                    const row = document.createElement('tr');
+                    row.className = 'bg-white border-b';
+                    rowData.forEach((cell, index) => {
+                        const td = document.createElement(index === 0 ? 'th' : 'td');
+                        if(index === 0) {
+                            td.scope = 'row';
+                            td.className = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap';
+                        } else {
+                            td.className = 'px-6 py-4 text-center font-bold';
+                        }
+                        td.textContent = cell;
+                        td.dataset.colIndex = index;
+
+                        if (cell === 'A') td.classList.add('text-red-600');
+                        if (cell === 'R') td.classList.add('text-blue-600');
+                        if (cell === 'C') td.classList.add('text-green-600');
+                        if (cell === 'I') td.classList.add('text-gray-500');
+
+                        if (filterIndex !== -1 && index > 1 && index !== filterIndex) {
+                            td.classList.add('hidden');
+                        }
+                        row.appendChild(td);
+                    });
+                    raciTbody.appendChild(row);
+                });
+            };
+
+            const allFilterBtn = document.createElement('button');
+            allFilterBtn.className = 'raci-filter px-4 py-2 text-sm font-medium rounded-md bg-gray-200 text-gray-700 active';
+            allFilterBtn.textContent = 'All Functions';
+            allFilterBtn.dataset.filterIndex = -1;
+            raciFiltersContainer.appendChild(allFilterBtn);
+
+            raciData.headers.slice(2).forEach((header, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'raci-filter px-4 py-2 text-sm font-medium rounded-md bg-gray-200 text-gray-700';
+                btn.textContent = header;
+                btn.dataset.filterIndex = index + 2;
+                raciFiltersContainer.appendChild(btn);
+            });
+
+            raciFiltersContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('raci-filter')) {
+                    document.querySelectorAll('.raci-filter').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderRaciTable(parseInt(e.target.dataset.filterIndex));
+                }
+            });
+
+            renderRaciTable();
+            
+            const roadmapContainer = document.getElementById('roadmap-container');
+            roadmapData.forEach((item, index) => {
+                const isLast = index === roadmapData.length - 1;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'relative md:w-1/4 card p-4 mb-8 md:mb-0';
+                
+                let content = `
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-orange-500">
+                        <div class="timeline-item absolute top-0 -left-2.5 md:left-1/2 md:-top-2.5 md:-translate-x-1/2"></div>
+                        <h4 class="font-bold text-lg mb-1">${item.phase}</h4>
+                        <p class="text-sm text-orange-600 font-semibold mb-3">${item.timeline}</p>
+                        <p class="text-sm text-gray-600 mb-2"><strong class="font-medium">Actions:</strong> ${item.details}</p>
+                        <p class="text-sm text-gray-600"><strong class="font-medium">Outcome:</strong> ${item.outcome}</p>
+                    </div>
+                `;
+                itemDiv.innerHTML = content;
+                roadmapContainer.appendChild(itemDiv);
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById(link.dataset.target).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.dataset.target === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => observer.observe(section));
+            
+            const ctx = document.getElementById('governanceGapChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Possess Overview (14%)', 'Recognize Need but Lack Overview (76%)', 'Do Not See Need (10%)'],
+                    datasets: [{
+                        data: [14, 76, 10],
+                        backgroundColor: ['#DC2626', '#F97316', '#E5E7EB'],
+                        borderColor: '#FDFBF8',
+                        borderWidth: 4,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                boxWidth: 15,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
